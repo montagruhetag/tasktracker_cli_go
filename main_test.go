@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"errors"
 	"os"
 	"testing"
 	"time"
@@ -17,16 +16,16 @@ func checkFatal(err error, t *testing.T) {
 
 }
 
-func TestCreateStorage(t *testing.T) {
-	defer os.Remove(TestStorageName)
-	_, err := getTasks(TestStorageName)
-	checkFatal(err, t)
+// func TestCreateStorage(t *testing.T) {
+// 	defer os.Remove(TestStorageName)
+// 	_, err := getTasks(TestStorageName)
+// 	checkFatal(err, t)
 
-	if _, err := os.Stat(TestStorageName); errors.Is(err, os.ErrNotExist) {
-		t.Errorf("The storage was not created")
-	}
-	os.Remove(TestStorageName)
-}
+// 	if _, err := os.Stat(TestStorageName); errors.Is(err, os.ErrNotExist) {
+// 		t.Errorf("The storage was not created")
+// 	}
+// 	os.Remove(TestStorageName)
+// }
 
 func TestGetTasks(t *testing.T) {
 	defer os.Remove(TestStorageName)

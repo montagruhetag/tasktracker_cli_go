@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"os"
 	"slices"
 	"sort"
@@ -58,25 +57,12 @@ func check(err error) {
 }
 
 func getTasks(path string) ([]Task, error) {
-	f, err := os.OpenFile(path, os.O_CREATE|os.O_RDONLY, 0666)
+	data, err := os.ReadFile(path)
 	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-
-	var data []byte
-	buffer := make([]byte, 1024)
-	reader := bufio.NewReader(f)
-	for {
-		n, err := reader.Read(buffer)
-		data = append(data, buffer[:n]...)
-		if err == io.EOF {
-			break
+		if errors.Is(err, os.ErrNotExist) {
+			return []Task{}, nil
 		}
-	}
-
-	if data == nil {
-		return nil, nil
+		return nil, err
 	}
 
 	var tasks []Task
