@@ -180,8 +180,11 @@ func deleteTaskById(ts []Task, id int) ([]Task, error) {
 		return nil, errors.New("Task index not found")
 	}
 
-	ts[index], ts[len(ts)-1] = ts[len(ts)-1], ts[index]
-	ts = ts[:len(ts)-1]
+	// O(N)
+	ts = slices.Delete(ts, index, index+1)
+	// O(1)
+	// ts[index], ts[len(ts)-1] = ts[len(ts)-1], ts[index]
+	// ts = ts[:len(ts)-1]
 	return ts, nil
 }
 
