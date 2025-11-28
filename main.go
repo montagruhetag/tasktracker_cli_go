@@ -93,6 +93,7 @@ func getTasks(path string) ([]Task, error) {
 func saveTasks(path string, ts []Task) {
 	f, err := os.OpenFile(path, os.O_TRUNC|os.O_WRONLY, 0666)
 	check(err)
+	defer f.Close()
 	b, err := json.Marshal(ts)
 	check(err)
 	f.Write(b)
