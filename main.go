@@ -95,7 +95,6 @@ func saveTasks(path string, ts []Task) {
 	check(err)
 	b, err := json.Marshal(ts)
 	check(err)
-	f.Truncate(0)
 	f.Write(b)
 }
 
